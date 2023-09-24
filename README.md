@@ -11,7 +11,15 @@ I'm using GCC compiler in the restrict mode to prevent error compilation bash co
 
 ```bash
 gcc -Wall ruffini.c -o any
+./any
 ```
+
+## Pre requisites
+- memory allocation
+- structs
+- pointers
+- regex
+
 
 ## LICENCE
 
