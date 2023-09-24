@@ -7,3 +7,5 @@ given any polynomial expression exists a binom x - a that divides it, this code 
 
 
 ## LICENCE
+## License
+ [MIT license](https://opensource.org/licenses/MIT).
