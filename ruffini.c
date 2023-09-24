@@ -68,8 +68,10 @@ void calcula(DivisaoRuffine *p)
     printf("Resultado dos coeficientes da divisao:\n");
     for (int i = 0; i < n - 1; ++i) {
         if(i < n - 2)
-            if(resultado[i] > 0 && i < n-2) printf("%dx^%d + ", resultado[i], (n - 2 - i));
+            if(resultado[i] > 0) printf("%dx^%d + ", resultado[i], (n - 2 - i));
             else printf("%dx^%d", resultado[i], (n - 2 - i));
+        else 
+        if(resultado[i] > 0)printf(" + %d", resultado[i]);
         else printf("%d", resultado[i]);
     }
     printf("\n\nResto da divisao: %d\n\n", resultado[n - 1]);
