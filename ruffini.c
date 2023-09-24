@@ -73,7 +73,7 @@ void calcula(DivisaoRuffine *p)
         else printf("%d", resultado[i]);
     }
     printf("\n\nResto da divisao: %d\n\n", resultado[n - 1]);
-    free(resultado);
+    free(resultado); free(p->coefDividendo);
 }
 
 void metodoRuffini(DivisaoRuffine *p) 
@@ -84,9 +84,25 @@ void metodoRuffini(DivisaoRuffine *p)
 
 int main() 
 {
+    char *exprr = NULL;
+    char caractere;
+    int tamanho = 0;
+
+    printf("Digite o polinomio que deseja dividir:\n");
+    while((caractere = getchar()) != '\n'){
+        if(' ' == caractere)continue;
+        ++tamanho;
+        exprr = realloc(exprr, tamanho * sizeof(char));
+        exprr[tamanho - 1] = caractere;
+    }
+
+    int divisor = 0;
+    printf("Digite o numero que dividira o polinomio:\n");
+    scanf("%d", &divisor);
+    
     DivisaoRuffine polinomios = { 
-        "3x^3-5x^2+x-2",
-        2,
+        exprr,
+        divisor,
         NULL,
         0
     };
