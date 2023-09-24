@@ -8,10 +8,11 @@ typedef struct tgMetodoRuffini {
     char  *divisor;               //- Divisor
     int  constDivisor;        //- Termo constante do divisor
     int  constDividendo;    //- Termo constante do dividendo
-    int  coefDividendoAx[];  //- Coef. do dividendo (a)x + bx
+    int  *coefDividendo;  //- Coef. do dividendo (a)x + bx
 } DivisaoRuffine;
 
-void carregaConstantes(DivisaoRuffine *p) {
+void carregaConstantes(DivisaoRuffine *p) 
+{
     int i = strlen(p->divisor - 1);
     while(!isdigit(p->divisor[i]))
         --i;
@@ -23,10 +24,33 @@ void carregaConstantes(DivisaoRuffine *p) {
     p->constDividendo = atoi(&p->dividendo[i]);
 }
 
-void carregaCoeficientes(DivisaoRuffine *p) { }
-void calcula(DivisaoRuffine *p) {}
+void carregaCoeficientes(DivisaoRuffine *p) 
+{
+    char *num;
+    int inicio = 0, fim = 0, size = 0;
+    for(int i = 0; i < strlen(p->divisor); ++i){
+        if(('x' == p->dividendo[i] || 'X' == p->dividendo[i])){
+            fim = i - 1;
+            for(int k = fim; k > strlen(p->divisor); --k)
+                if( '-' == p->dividendo[k] || '+' == p->dividendo[k]){
+                    inicio = k; break;   
+                };
+            for(int j = inicio; j != fim; ++j)num+=p->dividendo[j];
+            
+            ++size;
+            p->coefDividendo = (int *)realloc(p->coefDividendo, size * sizeof(int));
+            p->coefDividendo[size - 1] = atoi(num);
+        }
+    } 
+}
 
-void metodoRuffini(DivisaoRuffine *p) {
+void calcula(DivisaoRuffine *p) 
+{
+
+}
+
+void metodoRuffini(DivisaoRuffine *p) 
+{
     carregaConstantes(p);
     carregaCoeficientes(p);
     calcula(p);
