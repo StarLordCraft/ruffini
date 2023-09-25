@@ -11,15 +11,21 @@ typedef struct tgMetodoRuffini {
     int  numCoefficients;
 } DivisaoRuffini;
 
+
+/// @param p é o endereço de memória que a expressão está
+/// @return void
+/* 
+-- O que essa função faz:
+- Input: Recebe a exŕessão
+- Procces por meio de regex deve extrair e armazenar corretamente os coeficientes do polinômio
+*/   
 void carregaCoeficientes(DivisaoRuffini *p) 
 {
-    // Regular expression for finding coefficients and degrees in the dividend string
     const char *pattern = "([+-]?[0-9]*x\\^[0-9]+|[+-]?[0-9]*x|[+-]?[0-9]+)";
     
     regex_t regex;
     regmatch_t match;
 
-    // Compile the regular expression
     if (regcomp(&regex, pattern, REG_EXTENDED) != 0) {
         fprintf(stderr, "Failed to compile regex pattern\n");
         return;
@@ -29,24 +35,32 @@ void carregaCoeficientes(DivisaoRuffini *p)
     int size = 0;
     
     while (regexec(&regex, str, 1, &match, 0) == 0) {
-        // Extract the matched coefficient or degree
         char *match_str = str + match.rm_so;
+    
+        // Pegando coeficiente implicito como x que tem coeficiente 1 implicito
         int coef = (isdigit(match_str[0]) || (('+' == match_str[0] || 
         '-' == match_str[0]) && isdigit(match_str[1]))) ? atoi(match_str) : 1;
 
-        // Add the coefficient to your data structure
         ++size;
         p->coefDividendo = (int *)realloc(p->coefDividendo, size * sizeof(int));
         p->coefDividendo[size - 1] = coef;
         p->numCoefficients = size;
 
-        // Move to the next part of the string
         str += match.rm_eo;
     }
 
     regfree(&regex);
 }
 
+
+/// @param p é o endereço de memória que a expressão está
+/// @return void
+/* 
+-- O que essa função faz:
+- Input: Recebe a expressão com coeficientes processados
+- Deve aplicar o método de briot Ruffini pra retornar o quociente e resto da divisão
+- 2 arrays resultado e coefDividendo 
+*/  
 void calcula(DivisaoRuffini *p) 
 {
     if (p->coefDividendo == NULL || p->numCoefficients == 0) {
@@ -62,6 +76,8 @@ void calcula(DivisaoRuffini *p)
     for (int i = 1; i < n; ++i) {
         resultado[i] = resultado[i - 1] * p->constDivisor;
 
+        // - propositalmente o resultado[i] corresponde a coefDividendo[1 + i] para simplificar o for.
+        // - Isso se você considerar briot Ruffini padrão
         resultado[i] += p->coefDividendo[i];
     }
 
