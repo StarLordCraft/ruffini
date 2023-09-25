@@ -9,9 +9,9 @@ typedef struct tgMetodoRuffini {
     int  constDivisor;        //- Termo constante do divisor
     int  *coefDividendo;  //- Coef. do dividendo (a)x + bx
     int  numCoefficients;
-} DivisaoRuffine;
+} DivisaoRuffini;
 
-void carregaCoeficientes(DivisaoRuffine *p) 
+void carregaCoeficientes(DivisaoRuffini *p) 
 {
     // Regular expression for finding coefficients and degrees in the dividend string
     const char *pattern = "([+-]?[0-9]*x\\^[0-9]+|[+-]?[0-9]*x|[+-]?[0-9]+)";
@@ -47,7 +47,7 @@ void carregaCoeficientes(DivisaoRuffine *p)
     regfree(&regex);
 }
 
-void calcula(DivisaoRuffine *p) 
+void calcula(DivisaoRuffini *p) 
 {
     if (p->coefDividendo == NULL || p->numCoefficients == 0) {
         printf("No coefficients loaded for division.\n");
@@ -78,7 +78,7 @@ void calcula(DivisaoRuffine *p)
     free(resultado); free(p->coefDividendo);
 }
 
-void metodoRuffini(DivisaoRuffine *p) 
+void metodoRuffini(DivisaoRuffini *p) 
 {
     carregaCoeficientes(p);
     calcula(p);
@@ -102,7 +102,7 @@ int main()
     printf("Digite o numero que dividira o polinomio:\n");
     scanf("%d", &divisor);
     
-    DivisaoRuffine polinomios = { 
+    DivisaoRuffini polinomios = { 
         exprr,
         divisor,
         NULL,
