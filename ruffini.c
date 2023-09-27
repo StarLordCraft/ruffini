@@ -100,7 +100,7 @@ void metodoRuffini(DivisaoRuffini *p)
     calcula(p);
 }
 
-int main() 
+int main(int argc, char **argv) 
 {
     char *exprr = NULL;
     char caractere;
@@ -126,5 +126,6 @@ int main()
     };
 
     metodoRuffini(&polinomios);
+    free(exprr);
     return 0;
 }
