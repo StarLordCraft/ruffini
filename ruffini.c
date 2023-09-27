@@ -73,13 +73,11 @@ void calcula(DivisaoRuffini *p)
 
     resultado[0] = p->coefDividendo[0];
 
-    for (int i = 1; i < n; ++i) {
-        resultado[i] = resultado[i - 1] * p->constDivisor;
-
+    for (int i = 1; i < n; ++i)
         // - propositalmente o resultado[i] corresponde a coefDividendo[1 + i] para simplificar o for.
         // - Isso se você considerar briot Ruffini padrão
-        resultado[i] += p->coefDividendo[i];
-    }
+        resultado[i] = (resultado[i - 1] * p->constDivisor) + p->coefDividendo[i];
+    
 
     printf("Resultado dos coeficientes da divisao:\n");
     for (int i = 0; i < n - 1; ++i) {
